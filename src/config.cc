@@ -546,6 +546,15 @@ void handleLogsummary(Configuration *c, string logsummary)
     }
 }
 
+void handleNoDeviceExit(Configuration *c, string nodeviceexit)
+{
+    if (nodeviceexit == "true") { c->nodeviceexit = true; }
+    else if (nodeviceexit == "false") { c->nodeviceexit = false;}
+    else {
+        warning("No such nodeviceexit setting: \"%s\"\n", nodeviceexit.c_str());
+    }
+}
+
 void handleMeterfiles(Configuration *c, string meterfiles)
 {
     if (meterfiles.length() > 0)
@@ -816,6 +825,7 @@ shared_ptr<Configuration> loadConfiguration(string root, ConfigOverrides overrid
         else if (p.first == "resetafter") handleResetAfter(c, p.second);
         else if (p.first == "metershell") handleMeterShell(c, p.second);
         else if (p.first == "alarmshell") handleAlarmShell(c, p.second);
+        else if (p.first == "nodeviceexit") handleNoDeviceExit(c, p.second);
         else if (startsWith(p.first, "json_") ||
                  startsWith(p.first, "field_"))
         {
